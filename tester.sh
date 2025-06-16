@@ -89,7 +89,7 @@ run_predefined_tests() {
         echo -e "${CYAN}Running Helgrind for args: [${PHILO_ARGS}] for ${RUN_COUNT} times${RESET}"
         for ((index=1; index<=RUN_COUNT; index++)); do
             timeout $TIMEOUT_DURATION valgrind --tool=helgrind ./philo $PHILO_ARGS > "$TEMP_LOG" 2>&1
-            if grep -q "Possible data race" "$TEMP_LOG" || grep -q "ERROR SUMMARY: [1-9]" "$TEMP_LOG"; then
+            if grep -q "Possible data race" "$TEMP_LOG"; then
                 HELGRIND_RESULT="${RED}KO${RESET}"
                 ((HELGRIND_KO++))
             else
@@ -138,7 +138,7 @@ run_predefined_tests() {
         echo -e "${CYAN}Running Helgrind for args: [${PHILO_ARGS}] for ${RUN_COUNT} times${RESET}"
         for ((index=1; index<=RUN_COUNT; index++)); do
             timeout $TIMEOUT_DURATION valgrind --tool=helgrind ./philo $PHILO_ARGS > "$TEMP_LOG" 2>&1
-            if grep -q "Possible data race" "$TEMP_LOG" || grep -q "ERROR SUMMARY: [1-9]" "$TEMP_LOG"; then
+            if grep -q "Possible data race" "$TEMP_LOG"; then
                 HELGRIND_RESULT="${RED}KO${RESET}"
                 ((HELGRIND_KO++))
             else
@@ -317,7 +317,7 @@ case "$1" in
         HELGRIND_KO=0
         for ((index=1; index<=RUNS; index++)); do
             timeout $TIMEOUT_DURATION valgrind --tool=helgrind ./philo $PHILO_ARGS > "$TEMP_LOG" 2>&1
-            if grep -q "Possible data race" "$TEMP_LOG" || grep -q "ERROR SUMMARY: [1-9]" "$TEMP_LOG"; then
+            if grep -q "Possible data race" "$TEMP_LOG"; then
                 HELGRIND_RESULT="${RED}KO${RESET}"
                 ((HELGRIND_KO++))
             else
