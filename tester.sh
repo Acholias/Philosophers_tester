@@ -110,20 +110,20 @@ if [ $# -eq 0 ]; then
 		LOGIC_KO=0
 		for ((index=1; index<=RUN_COUNT; index++)); do
 			timeout $TIMEOUT_DURATION ./philo $PHILO_ARGS > "$TEMP_LOG" 2>&1
-            if grep -q "died" "$TEMP_LOG"; then
-                LINE_AFTER_DIED=$(awk '/died/ {print NR; exit}' "$TEMP_LOG")
-                TOTAL_LINES=$(wc -l < "$TEMP_LOG")
-                if [ "$LINE_AFTER_DIED" -lt "$TOTAL_LINES" ]; then
-                    PHILO_RESULT="${RED}KO (output after died)${RESET}"
-                    ((LOGIC_KO++))
-                else
-                    PHILO_RESULT="${GREEN}OK${RESET}"
-                    ((LOGIC_OK++))
-                fi
-            else
-                PHILO_RESULT="${RED}KO${RESET}"
-                ((LOGIC_KO++))
-            fi
+			if grep -q "died" "$TEMP_LOG"; then
+			    LAST_DIED_LINE=$(awk '/died/ {line=NR} END {print line}' "$TEMP_LOG")
+			    TOTAL_LINES=$(wc -l < "$TEMP_LOG")
+			    if [ "$LAST_DIED_LINE" -lt "$TOTAL_LINES" ]; then
+			        PHILO_RESULT="${RED}KO (output after died)${RESET}"s
+			        ((LOGIC_KO++))
+			    else
+			        PHILO_RESULT="${GREEN}OK${RESET}"
+			        ((LOGIC_OK++))
+			    fi
+			else
+			    PHILO_RESULT="${RED}KO${RESET}"
+			    ((LOGIC_KO++))
+			fi
 			printf "  Logic test $index : [philo: $PHILO_RESULT]\n"
 		done
 
