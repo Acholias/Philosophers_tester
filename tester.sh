@@ -11,7 +11,8 @@ RESET="\033[0m"
 TEMP_LOG=$(mktemp)
 RESULTS_LOG=$(mktemp)
 
-handle_sigint(){
+handle_sigint()
+{
     trap '' SIGTERM
     echo -e "\n${RED}Test interrupted by the user${RESET}"
     rm -f "$TEMP_LOG" "$RESULTS_LOG"
@@ -21,7 +22,8 @@ handle_sigint(){
 
 trap handle_sigint SIGINT
 
-display_help() {
+display_help()
+{
     echo -e "${CYAN}Usage: $0 [COMMAND | \"PHILO_ARGS\" [RUNS] [DEATH_MODE]]${RESET}"
     echo -e ""
     echo -e "${YELLOW}Description:${RESET}"
@@ -60,7 +62,8 @@ display_help() {
     exit 0
 }
 
-run_predefined_tests() {
+run_predefined_tests()
+{
     echo -e "${CYAN}Running predefined tests...${RESET}"
 
     NB_TESTS=${#TESTS_NO_DEATH[@]}
@@ -158,6 +161,8 @@ run_predefined_tests() {
     exit 0
 }
 
+##################### All tests for mandatory part #####################
+
 declare -a TESTS_NO_DEATH=(
     "4 410 200 200"
     "5 610 200 200"
@@ -188,6 +193,7 @@ declare -a RUNS_DEATH=(
     3
 )
 
+########################################################################
 
 if [ ! -x "./philo" ]; then
     echo -e "${RED}Error: The ./philo executable was not found in the current directory!${RESET}"
