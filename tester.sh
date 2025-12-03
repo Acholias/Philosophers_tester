@@ -164,7 +164,7 @@ run_predefined_tests()
 ##################### All tests for mandatory part #####################
 
 declare -a TESTS_NO_DEATH=(
-    "4 410 200 200"
+    "200 410 200 200"
     "5 610 200 200"
     "200 810 400 400"
     "5 800 200 200 7"
